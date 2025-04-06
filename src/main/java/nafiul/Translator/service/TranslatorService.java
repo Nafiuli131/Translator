@@ -56,7 +56,7 @@ public class TranslatorService {
             testTable.setText(text);
             testTableRepository.save(testTable);
             return new ResponseEntity<>(testTable, HttpStatus.OK);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             String message = ex.getMessage();
             ExceptionDto exceptionDto = new ExceptionDto();
             exceptionDto.setText(message);
@@ -64,21 +64,16 @@ public class TranslatorService {
         }
     }
 
-    public ResponseEntity<?> checkTestData(Long id) {
+    public String checkTestData(Long id) {
         try {
             Optional<TestTable> data = testTableRepository.findById(id);
-            if(data.isPresent()) {
-                return new ResponseEntity<>(data, HttpStatus.OK);
-            }else{
-                ExceptionDto exceptionDto = new ExceptionDto();
-                exceptionDto.setText("Data not found");
-                return new ResponseEntity<>(exceptionDto, HttpStatus.OK);
+            if (data.isPresent()) {
+                return data.get().getText();
+            } else {
+                return "Data not found";
             }
-        }catch (Exception ex){
-            String message = ex.getMessage();
-            ExceptionDto exceptionDto = new ExceptionDto();
-            exceptionDto.setText(message);
-            return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            return ex.getMessage();
         }
     }
 }

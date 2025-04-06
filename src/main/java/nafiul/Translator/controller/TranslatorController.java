@@ -25,12 +25,12 @@ public class TranslatorController {
 
     @PostMapping("/addTestData/{text}")
     public ResponseEntity<?> addTestData(@PathVariable String text) {
-        return new ResponseEntity<>(translatorService.addTestData(text),HttpStatus.OK);
+        return new ResponseEntity<>(translatorService.addTestData(text), HttpStatus.OK);
     }
 
     @GetMapping("/checkTestData/{id}")
-    public ResponseEntity<?> checkTestData(@PathVariable Long id){
-        return new ResponseEntity<>(translatorService.checkTestData(id),HttpStatus.OK);
+    public String checkTestData(@PathVariable Long id) {
+        return translatorService.checkTestData(id);
     }
 
 }
