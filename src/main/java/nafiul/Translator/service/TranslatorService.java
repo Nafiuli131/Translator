@@ -2,6 +2,9 @@ package nafiul.Translator.service;
 
 import nafiul.Translator.dto.ExceptionDto;
 import nafiul.Translator.dto.TranslatorDto;
+import nafiul.Translator.entity.TestTable;
+import nafiul.Translator.repository.TestTableRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +14,9 @@ import java.util.Map;
 
 @Service
 public class TranslatorService {
+
+    @Autowired
+    private TestTableRepository testTableRepository;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private static final String URL = "https://libretranslate.com/translate";
@@ -36,6 +42,20 @@ public class TranslatorService {
             ResponseEntity<String> response = restTemplate.postForEntity(URL, requestEntity, String.class);
             return response;
         } catch (Exception ex) {
+            String message = ex.getMessage();
+            ExceptionDto exceptionDto = new ExceptionDto();
+            exceptionDto.setText(message);
+            return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity<?> addTestData(String text) {
+        try {
+            TestTable testTable = new TestTable();
+            testTable.setText(text);
+            testTableRepository.save(testTable);
+            return new ResponseEntity<>(testTable, HttpStatus.OK);
+        }catch (Exception ex){
             String message = ex.getMessage();
             ExceptionDto exceptionDto = new ExceptionDto();
             exceptionDto.setText(message);

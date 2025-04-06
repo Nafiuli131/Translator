@@ -5,10 +5,7 @@ import nafiul.Translator.service.TranslatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TranslatorController {
@@ -22,7 +19,13 @@ public class TranslatorController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<?> testApi(){
+    public ResponseEntity<?> testApi() {
         return new ResponseEntity<>("Application is deployed", HttpStatus.OK);
     }
+
+    @PostMapping("/addTestData/{text}")
+    public ResponseEntity<?> addTestData(@PathVariable String text) {
+        return new ResponseEntity<>(translatorService.addTestData(text),HttpStatus.OK);
+    }
+
 }
