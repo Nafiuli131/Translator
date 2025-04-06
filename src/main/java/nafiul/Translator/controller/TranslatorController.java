@@ -28,9 +28,18 @@ public class TranslatorController {
         return new ResponseEntity<>(translatorService.addTestData(text), HttpStatus.OK);
     }
 
+    @PostMapping("/addName/{name}")
+    public ResponseEntity<?> addNameData(@PathVariable String name) {
+        return new ResponseEntity<>(translatorService.addNameData(name), HttpStatus.OK);
+    }
+
     @GetMapping("/checkTestData/{id}")
     public String checkTestData(@PathVariable Long id) {
         return translatorService.checkTestData(id);
     }
 
+    @GetMapping("/checkNameData/{id}")
+    public String checkNameData(@PathVariable Long id) {
+        return translatorService.checkNameData(id);
+    }
 }
