@@ -28,4 +28,9 @@ public class TranslatorController {
         return new ResponseEntity<>(translatorService.addTestData(text),HttpStatus.OK);
     }
 
+    @GetMapping("/checkTestData/{id}")
+    public ResponseEntity<?> checkTestData(@PathVariable Long id){
+        return new ResponseEntity<>(translatorService.checkTestData(id),HttpStatus.OK);
+    }
+
 }
